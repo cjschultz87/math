@@ -1,4 +1,4 @@
-def dtb(d,block):
+def dtb(d,base,block):
     if not(type(d) == type(5) and type(block) == type(5)):
         return []
     delta = []
@@ -8,15 +8,15 @@ def dtb(d,block):
     while d_prime > 0:
         if i % block == 0:
             delta.append([])
-        digit = d_prime % 2
+        digit = d_prime % base
         if i // block > iota:
             iota = i // block
         delta[iota].append(digit)
-        if d_prime // 2 == 0 and len(delta[iota]) < block:
+        if d_prime // base == 0 and len(delta[iota]) < block:
             while len(delta[iota]) < block:
                 delta[iota].append(0)
         i += 1
-        d_prime //= 2
+        d_prime //= base
     #for i,block in enumerate(delta):
     #    delta[i] = block[::-1]
     #delta = delta[::-1]
@@ -24,7 +24,7 @@ def dtb(d,block):
 
 ################################################
 
-def check_blocks(bravo_1,bravo_2):
+def check_blocks(bravo_1,bravo_2,base):
     bool = True
     if len(bravo_1) > 0 and len(bravo_2) > 0:
         for b in bravo_1:
@@ -33,7 +33,7 @@ def check_blocks(bravo_1,bravo_2):
             if type(b) != type([]):
                 bool = False
             for b_1 in b:
-                if type(b_1) != type(2) or b_1 > 1:
+                if type(b_1) != type(5) or b_1 >= base:
                     bool = False
         for b in bravo_2:
             if len(b) == 0:
@@ -41,7 +41,7 @@ def check_blocks(bravo_1,bravo_2):
             if type(b) != type([]):
                 bool = False
             for b_2 in b:
-                if type(b_2) != type(2) or b_2 > 1:
+                if type(b_2) != type(5) or b_2 >= base:
                     bool = False
     else:
         bool = False
@@ -49,11 +49,12 @@ def check_blocks(bravo_1,bravo_2):
     
 ################################################
 
-def block_sum(bravo_1,bravo_2):
-    if check_blocks(bravo_1,bravo_2) == True:
+def block_sum(bravo_1,bravo_2,base):
+    if check_blocks(bravo_1,bravo_2,base) == True:
         pass
     else:
-        return []
+        #return []
+        pass
     alpha = []
     i_1 = 0
     i_2 = 0
@@ -96,16 +97,19 @@ def block_sum(bravo_1,bravo_2):
             alpha.append([])
         if i // block_1 > iota:
             iota = i // block_1
-        if bool == False:
-            digit = (bravo_1[i//block_1][i%block_1]^bravo_2[i//block_2][i%block_2])
+        def x(a,b):
+            return min(max(a,b),base - (1 + min(a,b)))
             
-            conjunction = bravo_1[i//block_1][i%block_1] & bravo_2[i//block_2][i%block_2]
+        if bool == False:
+            digit = x(bravo_1[i//block_1][i%block_1],bravo_2[i//block_2][i%block_2])
+            
+            conjunction = max(bravo_1[i//block_1][i%block_1],bravo_2[i//block_2][i%block_2])
             
             if i > 0:
-                alpha[iota].append(carry^digit)
+                alpha[iota].append(x(carry,digit))
                 #carry = carry & digit
                 if carry > 0:
-                    carry = (carry & conjunction) | (carry & digit)
+                    carry = max(min(carry,conjunction),min(carry,digit))
                 else:
                     carry = conjunction
             else:
@@ -125,8 +129,8 @@ def block_sum(bravo_1,bravo_2):
     
 ################################################
     
-def block_product(bravo_1,bravo_2):
-    if check_blocks(bravo_1,bravo_2) == True:
+def block_product(bravo_1,bravo_2,base):
+    if check_blocks(bravo_1,bravo_2,base) == True:
         pass
     else:
         return []
