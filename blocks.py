@@ -105,7 +105,7 @@ def block_sum(bravo_1,bravo_2):
                 alpha[iota].append(carry^digit)
                 #carry = carry & digit
                 if carry > 0:
-                    carry = max(carry & conjunction,carry & digit)
+                    carry = (carry & conjunction) | (carry & digit)
                 else:
                     carry = conjunction
             else:
@@ -113,6 +113,8 @@ def block_sum(bravo_1,bravo_2):
                 carry = conjunction
         else:
             alpha[iota].append(carry)
+            while len(alpha[iota]) < block_1:
+                alpha[iota].append(0)
             carry = 0
         if i == N - 1 and carry > 0:
             N += 1
