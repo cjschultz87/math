@@ -103,7 +103,7 @@ def block_sum(bravo_1,bravo_2,base):
         if bool == False:
             digit = x(bravo_1[i//block_1][i%block_1],bravo_2[i//block_2][i%block_2])
             
-            conjunction = max(bravo_1[i//block_1][i%block_1],bravo_2[i//block_2][i%block_2])
+            conjunction = min(bravo_1[i//block_1][i%block_1],bravo_2[i//block_2][i%block_2])
             
             if i > 0:
                 alpha[iota].append(x(carry,digit))
