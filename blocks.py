@@ -24,6 +24,53 @@ def dtb(d,base,block):
 
 ################################################
 
+def btd(b,base):
+    if len(b) > 0:
+        for b_element in b:
+            if len(b_element) > 0:
+                for digit in b_element:
+                    if type(digit) ==  type(5):
+                        pass
+                    else:
+                        return []
+            else:
+                return []
+    else:
+        return []
+        
+    bravo = []
+    for b_element in b:
+        d = 0
+        for i,digit in enumerate(b_element):
+            d += digit * pow(base,i)
+        bravo.append(d)
+    return bravo
+
+################################################
+
+def pol(alpha,base,block):
+    error = "#####"
+    
+    if len(alpha) > 0:
+        for a in alpha:
+            if type(a) == type(5):
+                pass
+            else:
+                return error
+    else:
+        return error
+    
+    block_mag = pow(base,block)
+    sierra = ""
+    for i,a in enumerate(alpha):
+        sierra += f"{a} * {block_mag}^{i}"
+        if i < len(alpha) - 1:
+            sierra += " + "
+    return sierra
+    
+
+################################################
+
 def check_blocks(bravo_1,bravo_2,base):
     bool = True
     if len(bravo_1) > 0 and len(bravo_2) > 0:
