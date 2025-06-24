@@ -1,26 +1,39 @@
-def dtb(d,base,block):
-    if not(type(d) == type(5) and type(block) == type(5)):
-        return []
-    delta = []
-    d_prime = d
-    i = 0
-    iota = 0
-    while d_prime > 0:
-        if i % block == 0:
-            delta.append([])
-        digit = d_prime % base
-        if i // block > iota:
-            iota = i // block
-        delta[iota].append(digit)
-        if d_prime // base == 0 and len(delta[iota]) < block:
-            while len(delta[iota]) < block:
-                delta[iota].append(0)
-        i += 1
-        d_prime //= base
-    #for i,block in enumerate(delta):
-    #    delta[i] = block[::-1]
-    #delta = delta[::-1]
-    return delta
+class block(object):
+    def __init__(self):
+        self.space = []
+        self.base = 0
+        self.length = 0
+        
+    ################################################
+    
+    def dtb(self,d,base,block):
+        if not(type(d) == type(5) and type(block) == type(5)):
+            return []
+            
+        self.base = base
+        self.length = block
+        
+        delta = []
+        d_prime = d
+        i = 0
+        iota = 0
+        while d_prime > 0:
+            if i % block == 0:
+                delta.append([])
+            digit = d_prime % base
+            if i // block > iota:
+                iota = i // block
+            delta[iota].append(digit)
+            if d_prime // base == 0 and len(delta[iota]) < block:
+                while len(delta[iota]) < block:
+                    delta[iota].append(0)
+            i += 1
+            d_prime //= base
+        #for i,block in enumerate(delta):
+        #    delta[i] = block[::-1]
+        #delta = delta[::-1]
+        
+        self.space = delta
 
 ################################################
 
